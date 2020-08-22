@@ -3,7 +3,7 @@ import 'package:please_work/components/costume_suffix_icon.dart';
 import 'package:please_work/components/default_button.dart';
 import 'package:please_work/components/form_error.dart';
 import 'package:please_work/constants.dart';
-import 'package:please_work/services/authentication.dart';
+import 'package:please_work/services/authentication_service.dart';
 import 'package:please_work/size_config.dart';
 
 class SignForm extends StatefulWidget {
@@ -16,6 +16,7 @@ class _SignFormState extends State<SignForm> {
   String email;
   String password;
   bool rememberMe = false;
+
   List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class _SignFormState extends State<SignForm> {
                   //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                   final AuthService _authService = AuthService();
                   dynamic user = await _authService.signInAnonymously();
-                  user == null ? print('can not sigin') : print('success');
+                  print(user.uid);
                 }
               }
             },
