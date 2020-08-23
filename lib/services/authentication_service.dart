@@ -5,7 +5,14 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   CustomUser _userFromFirebaseUser(User _firebaseUser) {
-    return _firebaseUser != null ? CustomUser(uid: _firebaseUser.uid) : null;
+    return _firebaseUser != null
+        ? CustomUser(
+            uid: _firebaseUser.uid,
+            email: _firebaseUser.email,
+            name: _firebaseUser.displayName,
+            phone: _firebaseUser.phoneNumber,
+          )
+        : null;
   }
 
   // Future<User> signInAnonymously() async {
@@ -22,8 +29,6 @@ class AuthService {
   Future<CustomUser> signInAnonymously() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
-      print(result);
-      print(result.user);
       return _userFromFirebaseUser(result.user);
     } catch (e) {
       print(e);
@@ -41,21 +46,38 @@ class AuthService {
     // This is <==> to the syntax above it
   }
 
-  Future<User> signInEmailPassword(
+  Future<CustomUser> signInEmailPassword(
       {final String email, final String password}) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return result.user;
+      return _userFromFirebaseUser(result.user);
     } catch (e) {
       print(e);
       return null;
     }
   }
 
-  void signOut() async {
-    await _auth.signOut();
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<CustomUser> registerWithEmailAndPassword(
+      {String email, String password}) async {
+    try {
+      final result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return _userFromFirebaseUser(result.user);
+    } catch (e) {
+      return null;
+    }
   }
 }

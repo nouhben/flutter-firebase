@@ -6,33 +6,37 @@ import 'package:please_work/constants.dart';
 import 'package:please_work/services/authentication_service.dart';
 import 'package:please_work/size_config.dart';
 
-class SignForm extends StatefulWidget {
+class SignUpForm extends StatefulWidget {
   @override
-  _SignFormState createState() => _SignFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignFormState extends State<SignForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   String email;
+  String fullname;
   String password;
   bool rememberMe = false;
 
   List<String> errors = [];
   @override
   Widget build(BuildContext context) {
-    print('Re-Building ========> Form');
     return Form(
       key: _formKey,
       child: Column(
         children: [
           SizedBox(
             width: SizeConfig.screenWidth * 0.79,
-            child: buildEmailFormField(),
+            child: _buildFullNameFormField(),
+          ),
+          SizedBox(
+            width: SizeConfig.screenWidth * 0.79,
+            child: _buildEmailFormField(),
           ),
           SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
           SizedBox(
             width: SizeConfig.screenWidth * 0.79,
-            child: buildPasswordFormField(),
+            child: _buildPasswordFormField(),
           ),
           SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
           Row(
@@ -84,7 +88,7 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
-  TextFormField buildEmailFormField() {
+  TextFormField _buildEmailFormField() {
     return TextFormField(
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
@@ -125,7 +129,47 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
-  TextFormField buildPasswordFormField() {
+  TextFormField _buildFullNameFormField() {
+    return TextFormField(
+      onSaved: (newValue) => fullname = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty && errors.contains(kNameNullError)) {
+          setState(() {
+            errors.remove(kNameNullError);
+          });
+        } else if (value.length >= 6 && errors.contains(kshortNameError)) {
+          setState(() {
+            errors.remove(kshortNameError);
+          });
+          return "";
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty && !errors.contains(kNameNullError)) {
+          setState(() {
+            errors.add(kNameNullError);
+          });
+          return "";
+        } else if (value.length < 8 && !errors.contains(kshortNameError)) {
+          setState(() {
+            errors.add(kshortNameError);
+          });
+          return "";
+        }
+        return null;
+      },
+      keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+        hintText: 'Enter your full name',
+        labelText: "Full name",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CostumeSuffixIcon(svgName: 'assets/icons/User.svg'),
+      ),
+    );
+  }
+
+  TextFormField _buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
       onSaved: (newValue) => password = newValue,
