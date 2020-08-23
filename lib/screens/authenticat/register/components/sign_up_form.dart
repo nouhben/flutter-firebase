@@ -29,6 +29,7 @@ class _SignUpFormState extends State<SignUpForm> {
             width: SizeConfig.screenWidth * 0.79,
             child: _buildFullNameFormField(),
           ),
+          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
           SizedBox(
             width: SizeConfig.screenWidth * 0.79,
             child: _buildEmailFormField(),
@@ -39,34 +40,10 @@ class _SignUpFormState extends State<SignUpForm> {
             child: _buildPasswordFormField(),
           ),
           SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          Row(
-            children: [
-              Checkbox(
-                value: rememberMe,
-                activeColor: kPrimaryColor,
-                onChanged: (value) {
-                  setState(() {
-                    rememberMe = value;
-                  });
-                },
-              ),
-              Text('Remember me'),
-              Spacer(),
-              MaterialButton(
-                onPressed: () async {
-                  // Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
-                },
-                child: Text(
-                  'Forget Password',
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
-              )
-            ],
-          ),
           FormError(errors: errors),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(20)),
+          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
           DefaultButton(
-            text: 'Continue',
+            text: 'Register',
             color: kPrimaryColor,
             press: () async {
               if (_formKey.currentState.validate()) {
@@ -74,11 +51,13 @@ class _SignUpFormState extends State<SignUpForm> {
                 if (errors.isEmpty) {
                   //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                   final AuthService _authService = AuthService();
-                  dynamic user = await _authService.signInEmailPassword(
+                  dynamic user =
+                      await _authService.registerWithEmailAndPassword(
                     email: this.email,
                     password: this.password,
-                  ); //await _authService.signInAnonymously();
-                  print(user.uid);
+                  );
+                  //await _authService.signInAnonymously();
+                  print(user.toString());
                 }
               }
             },
@@ -137,7 +116,7 @@ class _SignUpFormState extends State<SignUpForm> {
           setState(() {
             errors.remove(kNameNullError);
           });
-        } else if (value.length >= 6 && errors.contains(kshortNameError)) {
+        } else if (value.length >= 5 && errors.contains(kshortNameError)) {
           setState(() {
             errors.remove(kshortNameError);
           });
@@ -151,7 +130,7 @@ class _SignUpFormState extends State<SignUpForm> {
             errors.add(kNameNullError);
           });
           return "";
-        } else if (value.length < 8 && !errors.contains(kshortNameError)) {
+        } else if (value.length < 5 && !errors.contains(kshortNameError)) {
           setState(() {
             errors.add(kshortNameError);
           });

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:please_work/components/no_account_text.dart';
 import 'package:please_work/screens/authenticat/register/components/sign_up_form.dart';
+import 'package:please_work/screens/authenticat/signin/sign_in_screen.dart';
 import 'package:please_work/size_config.dart';
 
 class Body extends StatelessWidget {
@@ -54,7 +56,18 @@ class Body extends StatelessWidget {
                 // ),
 
                 //SizedBox(height: SizeConfig.screenHeight * 0.04),
-                //NoAccountText(),
+                NoAccountText(
+                  text1: 'Already have an account?',
+                  text2: 'Sign in',
+                  onPress: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInScreen(),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
