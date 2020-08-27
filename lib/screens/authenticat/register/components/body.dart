@@ -5,6 +5,9 @@ import 'package:please_work/screens/authenticat/signin/sign_in_screen.dart';
 import 'package:please_work/size_config.dart';
 
 class Body extends StatelessWidget {
+  //final Function toggleView;
+
+  // const Body({this.toggleView});
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -32,30 +35,9 @@ class Body extends StatelessWidget {
                   'Sign up with email and password\nand provide your full name',
                   textAlign: TextAlign.center,
                 ),
-                //SizeConfig.screenHeight * 0.08
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignUpForm(),
-                //
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     SocialCard(
-                //       image: 'assets/icons/facebook-2.svg',
-                //       onPress: () {},
-                //     ),
-                //     SocialCard(
-                //       image: 'assets/icons/google-icon.svg',
-                //       onPress: () {},
-                //     ),
-                //     SocialCard(
-                //       image: 'assets/icons/twitter.svg',
-                //       onPress: () {},
-                //     ),
-                //   ],
-                // ),
-
-                //SizedBox(height: SizeConfig.screenHeight * 0.04),
                 NoAccountText(
                   text1: 'Already have an account?',
                   text2: 'Sign in',
@@ -66,6 +48,7 @@ class Body extends StatelessWidget {
                         builder: (context) => SignInScreen(),
                       ),
                     );
+                    //this.toggleView();
                   },
                 ),
               ],

@@ -20,7 +20,6 @@ class _SignFormState extends State<SignForm> {
   List<String> errors = [];
   @override
   Widget build(BuildContext context) {
-    print('Re-Building ========> Form');
     return Form(
       key: _formKey,
       child: Column(
@@ -88,6 +87,9 @@ class _SignFormState extends State<SignForm> {
     return TextFormField(
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
+        setState(() {
+          email = value;
+        });
         if (value.isNotEmpty && errors.contains(kEmailNullError)) {
           setState(() {
             errors.remove(kEmailNullError);
@@ -100,18 +102,19 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
+      // validator: (val) => (val.isEmpty || val.length < 6) ? return 'invalid value' : return null,
       validator: (value) {
         if (value.isEmpty && !errors.contains(kEmailNullError)) {
           setState(() {
             errors.add(kEmailNullError);
           });
-          return "";
+          return kEmailNullError;
         } else if (!emailValidatorRegExp.hasMatch(value) &&
             !errors.contains(kInvalidEmailError)) {
           setState(() {
             errors.add(kInvalidEmailError);
           });
-          return "";
+          return kInvalidEmailError;
         }
         return null;
       },
@@ -130,6 +133,9 @@ class _SignFormState extends State<SignForm> {
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
+        setState(() {
+          email = value;
+        });
         if (value.isNotEmpty && errors.contains(kPassNullError)) {
           setState(() {
             errors.remove(kPassNullError);

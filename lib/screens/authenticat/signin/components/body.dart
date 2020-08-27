@@ -6,9 +6,11 @@ import 'package:please_work/screens/authenticat/signin/components/sign_in_form.d
 import 'package:please_work/size_config.dart';
 
 class Body extends StatelessWidget {
+  //final Function toggleView;
+
+  //const Body({Key key, this.toggleView}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print('rebuilding ========+===> Body');
     SizeConfig.init(context);
     return SafeArea(
       child: SizedBox(
@@ -68,6 +70,7 @@ class Body extends StatelessWidget {
                         builder: (context) => RegisterScreen(),
                       ),
                     );
+                    //this.toggleView();
                   },
                 ),
               ],
