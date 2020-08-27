@@ -22,6 +22,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      autovalidate: true,
       key: _formKey,
       child: Column(
         children: [
@@ -46,6 +47,7 @@ class _SignUpFormState extends State<SignUpForm> {
             text: 'Register',
             color: kPrimaryColor,
             press: () async {
+              // The validate() function uses the validators if the validator returns null // which means the field is valid
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 if (errors.isEmpty) {
@@ -114,27 +116,31 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty && errors.contains(kNameNullError)) {
           setState(() {
+            fullname = value;
             errors.remove(kNameNullError);
           });
         } else if (value.length >= 5 && errors.contains(kshortNameError)) {
           setState(() {
+            fullname = value;
             errors.remove(kshortNameError);
           });
-          return "";
+          return "Invalid";
         }
         return null;
       },
       validator: (value) {
         if (value.isEmpty && !errors.contains(kNameNullError)) {
           setState(() {
+            fullname = value;
             errors.add(kNameNullError);
           });
-          return "";
+          return " Error ";
         } else if (value.length < 5 && !errors.contains(kshortNameError)) {
           setState(() {
+            fullname = value;
             errors.add(kshortNameError);
           });
-          return "";
+          return "Error ";
         }
         return null;
       },
@@ -155,27 +161,31 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty && errors.contains(kPassNullError)) {
           setState(() {
+            password = value;
             errors.remove(kPassNullError);
           });
         } else if (value.length >= 8 && errors.contains(kshortPassError)) {
           setState(() {
+            password = value;
             errors.remove(kshortPassError);
           });
-          return "";
+          return "password error";
         }
         return null;
       },
       validator: (value) {
         if (value.isEmpty && !errors.contains(kPassNullError)) {
           setState(() {
+            password = value;
             errors.add(kPassNullError);
           });
-          return "";
+          return "Password error";
         } else if (value.length < 8 && !errors.contains(kshortPassError)) {
           setState(() {
             errors.add(kshortPassError);
+            password = value;
           });
-          return "";
+          return "Password error";
         }
         return null;
       },
