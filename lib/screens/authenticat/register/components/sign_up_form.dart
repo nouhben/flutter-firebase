@@ -50,17 +50,13 @@ class _SignUpFormState extends State<SignUpForm> {
               // The validate() function uses the validators if the validator returns null // which means the field is valid
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                if (errors.isEmpty) {
-                  //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                  final AuthService _authService = AuthService();
-                  dynamic user =
-                      await _authService.registerWithEmailAndPassword(
-                    email: this.email,
-                    password: this.password,
-                  );
-                  //await _authService.signInAnonymously();
-                  print(user.toString());
-                }
+                //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                final AuthService _authService = AuthService();
+                dynamic user = await _authService.registerWithEmailAndPassword(
+                  email: this.email,
+                  password: this.password,
+                );
+                print(user.toString());
               }
             },
           ),
@@ -73,30 +69,14 @@ class _SignUpFormState extends State<SignUpForm> {
     return TextFormField(
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.remove(kInvalidEmailError);
-          });
-        }
-        return null;
+        setState(() => email = value);
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
-          return "";
-        } else if (!emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.add(kInvalidEmailError);
-          });
-          return "";
+        if (value.isEmpty) {
+          return kEmailNullError;
+        }
+        if (!emailValidatorRegExp.hasMatch(value)) {
+          return kInvalidEmailError;
         }
         return null;
       },
@@ -114,35 +94,10 @@ class _SignUpFormState extends State<SignUpForm> {
     return TextFormField(
       onSaved: (newValue) => fullname = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kNameNullError)) {
-          setState(() {
-            fullname = value;
-            errors.remove(kNameNullError);
-          });
-        } else if (value.length >= 5 && errors.contains(kshortNameError)) {
-          setState(() {
-            fullname = value;
-            errors.remove(kshortNameError);
-          });
-          return "Invalid";
-        }
-        return null;
+        setState(() => fullname = value);
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kNameNullError)) {
-          setState(() {
-            fullname = value;
-            errors.add(kNameNullError);
-          });
-          return " Error ";
-        } else if (value.length < 5 && !errors.contains(kshortNameError)) {
-          setState(() {
-            fullname = value;
-            errors.add(kshortNameError);
-          });
-          return "Error ";
-        }
-        return null;
+        return value.length < 5 ? kshortNameError : null;
       },
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
@@ -159,35 +114,10 @@ class _SignUpFormState extends State<SignUpForm> {
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kPassNullError)) {
-          setState(() {
-            password = value;
-            errors.remove(kPassNullError);
-          });
-        } else if (value.length >= 8 && errors.contains(kshortPassError)) {
-          setState(() {
-            password = value;
-            errors.remove(kshortPassError);
-          });
-          return "password error";
-        }
-        return null;
+        setState(() => password = value);
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kPassNullError)) {
-          setState(() {
-            password = value;
-            errors.add(kPassNullError);
-          });
-          return "Password error";
-        } else if (value.length < 8 && !errors.contains(kshortPassError)) {
-          setState(() {
-            errors.add(kshortPassError);
-            password = value;
-          });
-          return "Password error";
-        }
-        return null;
+        return value.length < 8 ? kshortPassError : null;
       },
       decoration: InputDecoration(
         hintText: 'Enter your password',
