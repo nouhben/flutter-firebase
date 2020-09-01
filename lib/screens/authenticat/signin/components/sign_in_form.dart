@@ -12,6 +12,7 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _authService = AuthService();
   String email;
   String password;
   bool rememberMe = false;
@@ -68,7 +69,7 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState.save();
                 if (errors.isEmpty) {
                   //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                  final AuthService _authService = AuthService();
+                  // final AuthService _authService = AuthService();
                   dynamic user = await _authService.signInEmailPassword(
                     email: this.email,
                     password: this.password,

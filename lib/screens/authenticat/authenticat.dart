@@ -9,6 +9,7 @@ class Authenticat extends StatefulWidget {
 
 class _AuthenticatState extends State<Authenticat> {
   bool showSignIn = true;
+  //This function will be called from either sigin or register
   void toggleView() {
     setState(() {
       showSignIn = !showSignIn;

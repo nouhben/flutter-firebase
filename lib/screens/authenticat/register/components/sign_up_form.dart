@@ -13,6 +13,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _authService = AuthService();
   String email;
   String fullname;
   String password;
@@ -22,7 +23,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      autovalidate: true,
+      //autovalidate: true,
       key: _formKey,
       child: Column(
         children: [
@@ -51,7 +52,7 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                final AuthService _authService = AuthService();
+                //final AuthService _authService = AuthService();
                 dynamic user = await _authService.registerWithEmailAndPassword(
                   email: this.email,
                   password: this.password,

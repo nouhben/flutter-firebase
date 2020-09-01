@@ -10,6 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AuthService _authService = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Sign out',
                 color: kPrimaryColor,
                 press: () async {
-                  AuthService _authService = AuthService();
                   await _authService.signOut();
                 },
               ),
