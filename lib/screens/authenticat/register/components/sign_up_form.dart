@@ -18,7 +18,7 @@ class _SignUpFormState extends State<SignUpForm> {
   String fullname;
   String password;
   bool rememberMe = false;
-
+  String error = '';
   List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _SignUpFormState extends State<SignUpForm> {
             child: _buildPasswordFormField(),
           ),
           SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          FormError(errors: errors),
+          FormError(errors: [error]),
           SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
           DefaultButton(
             text: 'Register',
@@ -57,7 +57,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   email: this.email,
                   password: this.password,
                 );
-                print(user.toString());
+                if (user == null) {
+                  setState(() => error = 'Could not sign in');
+                }
               }
             },
           ),
