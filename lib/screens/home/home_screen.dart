@@ -16,23 +16,25 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('HOME'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(width: double.infinity),
-          SizedBox(
-            width: SizeConfig.getProportionateScreenWidth(150.0),
-            child: DefaultButton(
-              text: 'Sign out',
-              color: kPrimaryColor,
-              press: () async {
-                AuthService _authService = AuthService();
-                await _authService.signOut();
-              },
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: SizeConfig.getProportionateScreenWidth(150.0),
+              child: DefaultButton(
+                text: 'Sign out',
+                color: kPrimaryColor,
+                press: () async {
+                  AuthService _authService = AuthService();
+                  await _authService.signOut();
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
