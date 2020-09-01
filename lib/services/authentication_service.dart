@@ -60,8 +60,10 @@ class AuthService {
     }
   }
 
-  Future<CustomUser> registerWithEmailAndPassword(
-      {final String email, final String password}) async {
+  Future<CustomUser> registerWithEmailAndPassword({
+    final String email,
+    final String password,
+  }) async {
     try {
       final UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
