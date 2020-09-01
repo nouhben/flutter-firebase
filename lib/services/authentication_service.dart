@@ -60,22 +60,24 @@ class AuthService {
     }
   }
 
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (e) {
-      return null;
-    }
-  }
-
   Future<CustomUser> registerWithEmailAndPassword(
-      {String email, String password}) async {
+      {final String email, final String password}) async {
     try {
-      final result = await _auth.createUserWithEmailAndPassword(
+      final UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       return _userFromFirebaseUser(result.user);
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+//benkadi.nouh@icloud.com
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
     } catch (e) {
       return null;
     }

@@ -5,6 +5,7 @@ import 'package:please_work/services/authentication_service.dart';
 import 'package:please_work/size_config.dart';
 
 class HomeScreen extends StatefulWidget {
+  static final String routeName = '/home_screen';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

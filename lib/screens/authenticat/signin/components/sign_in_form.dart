@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:please_work/components/costume_suffix_icon.dart';
 import 'package:please_work/components/default_button.dart';
+import 'package:please_work/components/form_error.dart';
 import 'package:please_work/constants.dart';
 import 'package:please_work/services/authentication_service.dart';
 import 'package:please_work/size_config.dart';
@@ -16,8 +17,8 @@ class _SignFormState extends State<SignForm> {
   String email;
   String password;
   bool rememberMe = false;
-
   List<String> errors = [];
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -59,7 +60,7 @@ class _SignFormState extends State<SignForm> {
               )
             ],
           ),
-          //FormError(errors: errors),
+          FormError(errors: errors),
           SizedBox(height: SizeConfig.getProportionateScreenHeight(20)),
           DefaultButton(
             text: 'Continue',
@@ -73,8 +74,14 @@ class _SignFormState extends State<SignForm> {
                   dynamic user = await _authService.signInEmailPassword(
                     email: this.email,
                     password: this.password,
-                  ); //await _authService.signInAnonymously();
-                  print(user.uid);
+                  );
+                  print(user); //await _authService.signInAnonymously();
+                  if (user == null) {
+                    setState(() {
+                      this.errors = [];
+                      this.errors.add('Could not sign in please checkout');
+                    });
+                  }
                 }
               }
             },
