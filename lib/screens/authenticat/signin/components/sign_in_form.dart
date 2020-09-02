@@ -4,6 +4,7 @@ import 'package:please_work/components/default_button.dart';
 import 'package:please_work/components/form_error.dart';
 import 'package:please_work/constants.dart';
 import 'package:please_work/services/authentication_service.dart';
+import 'package:please_work/shared/loading.dart';
 import 'package:please_work/size_config.dart';
 
 class SignForm extends StatefulWidget {
@@ -18,77 +19,83 @@ class _SignFormState extends State<SignForm> {
   String password;
   bool rememberMe = false;
   List<String> errors = [];
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      //autovalidate: true,
-      key: _formKey,
-      child: Column(
-        children: [
-          SizedBox(
-            width: SizeConfig.screenWidth * 0.79,
-            child: buildEmailFormField(),
-          ),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          SizedBox(
-            width: SizeConfig.screenWidth * 0.79,
-            child: buildPasswordFormField(),
-          ),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          Row(
-            children: [
-              Checkbox(
-                value: rememberMe,
-                activeColor: kPrimaryColor,
-                onChanged: (value) {
-                  setState(() {
-                    rememberMe = value;
-                  });
-                },
-              ),
-              Text('Remember me'),
-              Spacer(),
-              MaterialButton(
-                onPressed: () async {
-                  // Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
-                },
-                child: Text(
-                  'Forget Password',
-                  style: TextStyle(decoration: TextDecoration.underline),
+    return isLoading
+        ? Loading()
+        : Form(
+            //autovalidate: true,
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: SizeConfig.screenWidth * 0.79,
+                  child: buildEmailFormField(),
                 ),
-              )
-            ],
-          ),
-          FormError(errors: errors),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(20)),
-          DefaultButton(
-            text: 'Continue',
-            color: kPrimaryColor,
-            press: () async {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                if (errors.isEmpty) {
-                  //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                  // final AuthService _authService = AuthService();
-                  dynamic user = await _authService.signInEmailPassword(
-                    email: this.email,
-                    password: this.password,
-                  );
-                  print(user); //await _authService.signInAnonymously();
-                  if (user == null) {
-                    setState(() {
-                      this.errors = [];
-                      this.errors.add('Could not sign in please checkout');
-                    });
-                  }
-                }
-              }
-            },
-          ),
-        ],
-      ),
-    );
+                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(
+                  width: SizeConfig.screenWidth * 0.79,
+                  child: buildPasswordFormField(),
+                ),
+                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: rememberMe,
+                      activeColor: kPrimaryColor,
+                      onChanged: (value) {
+                        setState(() {
+                          rememberMe = value;
+                        });
+                      },
+                    ),
+                    Text('Remember me'),
+                    Spacer(),
+                    MaterialButton(
+                      onPressed: () async {
+                        // Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
+                      },
+                      child: Text(
+                        'Forget Password',
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      ),
+                    )
+                  ],
+                ),
+                FormError(errors: errors),
+                SizedBox(height: SizeConfig.getProportionateScreenHeight(20)),
+                DefaultButton(
+                  text: 'Continue',
+                  color: kPrimaryColor,
+                  press: () async {
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+                      setState(() {
+                        isLoading = true;
+                      });
+                      //if (errors.isEmpty) {
+                      //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                      // final AuthService _authService = AuthService();
+                      dynamic user = await _authService.signInEmailPassword(
+                        email: this.email,
+                        password: this.password,
+                      );
+                      print(user); //await _authService.signInAnonymously();
+                      if (user == null) {
+                        setState(() {
+                          this.errors = [];
+                          this.errors.add('Could not sign in please checkout');
+                          isLoading = false;
+                        });
+                      }
+                      //}
+                    }
+                  },
+                ),
+              ],
+            ),
+          );
   }
 
   TextFormField buildEmailFormField() {
