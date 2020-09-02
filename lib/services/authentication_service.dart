@@ -17,17 +17,6 @@ class AuthService {
         : null;
   }
 
-  // Future<User> signInAnonymously() async {
-  //   try {
-  //     UserCredential result = await _auth.signInAnonymously();
-  //     print(result);
-  //     print(result.user);
-  //     return result.user;
-  //   } catch (e) {
-  //     print(e);
-  //     return null;
-  //   }
-  // }
   Future<CustomUser> signInAnonymously() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
@@ -72,14 +61,14 @@ class AuthService {
         password: password,
       );
       //set up the database user data by using his uid to link it with firestore
-      await DatabaseService(uid: result.user.uid).updateUserSettings(
+      await DatabaseService(uid: result.user.uid).updateUserData(
         sugars: 2,
         strength: 100,
-        name: 'Sam Ahmedy',
+        name: 'Dummy name',
       );
       return _userFromFirebaseUser(result.user);
     } catch (e) {
-      print(e);
+      print(e.toString());
       return null;
     }
   }

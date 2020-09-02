@@ -1,5 +1,5 @@
-class CustomUserSettings {
-  const CustomUserSettings({
+class Brew {
+  const Brew({
     this.name,
     this.sugars,
     this.strength,

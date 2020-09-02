@@ -1,51 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:please_work/models/settings.dart';
+import 'package:please_work/models/brew.dart';
 
 class DatabaseService {
   //1- we need a collection reference which is ref to a collection in the firestore
   // It does not matter if we created thecollection if it does not exists firestor will created
-  final CollectionReference userSettingsCollection =
-      FirebaseFirestore.instance.collection('userSettings');
+  final CollectionReference brewCollection =
+      FirebaseFirestore.instance.collection('brews');
 
-  //This uid is used to link the firestor record of a particular collection
-  // to a particular user
+  //This uid is used to link the firestor record of a particular collection to a particular user
   final String uid;
 
   DatabaseService({this.uid});
 
-  // CustomUserSettings _customUserSettingsFromFireStore(
-  //     DocumentSnapshot _snapshot) {
-  //   return _snapshot == null
-  //       ? null
-  //       : CustomUserSettings(
-  //           name: _snapshot.get('name'),
-  //           strength: _snapshot.get('strength'),
-  //           sugars: _snapshot.get('sugars'),
-  //         );
-  // }
-
-  List<CustomUserSettings> _userSettingsListFromSnapshot(
-          QuerySnapshot snapshot) =>
-      snapshot.docs.map(
-        (doc) => CustomUserSettings(
-          name: doc.get('name') ?? '',
-          strength: doc.get('strength') ?? 100,
-          sugars: doc.get('sugars') ?? 0,
-        ),
-      );
-
-  Future updateUserSettings({String name, int sugars, int strength}) async {
-    return await userSettingsCollection.doc(uid).set({
+  Future updateUserData({String name, int sugars, int strength}) async {
+    return await brewCollection.doc(uid).set({
       'sugars': sugars,
       'strength': strength,
       'name': name,
     });
   }
 
-  // This stream will listen to any changes on collection that the ref is poiting to
-  // and notify us
-  Stream<CustomUserSettings> get userSettings =>
-      userSettingsCollection.snapshots().map(_userSettingsListFromSnapshot);
-  // Stream<QuerySnapshot> get userSettings =>
-  //     userSettingsCollection.snapshots(includeMetadataChanges: false);
+  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.toList().map((doc) {
+      return Brew(
+        name: doc.get('name') ?? '',
+        strength: doc.get('strength') ?? 100,
+        sugars: doc.get('sugars') ?? 0,
+      );
+    }).toList();
+  }
+
+  // This stream will listen to any changes on collection that the ref is poiting to and notify us
+  Stream<List<Brew>> get brews {
+    return brewCollection.snapshots().map(_brewListFromSnapshot);
+  }
 }
