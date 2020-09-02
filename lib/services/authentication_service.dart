@@ -73,7 +73,7 @@ class AuthService {
       );
       //set up the database user data by using his uid to link it with firestore
       final userData =
-          await DatabaseService(uid: result.user.uid).updateUserData(
+          await DatabaseService(uid: result.user.uid).updateUserSettings(
         sugars: 2,
         strength: 100,
         name: 'Sam Ahmedy',
