@@ -65,7 +65,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   });
                 } else {
                   print('success state should update: $user');
-                  Navigator.pushNamed(context, HomeScreen.routeName);
+                  //Navigator.pushNamed(context, HomeScreen.routeName);
                 }
               }
             },

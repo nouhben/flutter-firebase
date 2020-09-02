@@ -58,16 +58,24 @@ class Body extends StatelessWidget {
 
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 NoAccountText(
-                  text1: 'Don\'t have an account?',
+                  text1: 'Don\'t have an account? ',
                   text2: 'Register',
                   onPress: () {
-                    Navigator.pushReplacement(
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => RegisterScreen(),
+                    //   ),
+                    // );
+                    //this.toggleView();
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RegisterScreen(),
+                        builder: (context) => RegisterScreen(
+                          toggle: () {},
+                        ),
                       ),
                     );
-                    //this.toggleView();
                   },
                 ),
               ],

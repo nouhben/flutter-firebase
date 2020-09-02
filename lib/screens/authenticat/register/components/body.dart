@@ -36,10 +36,10 @@ class Body extends StatelessWidget {
                 SignUpForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 NoAccountText(
-                  text1: 'Already have an account?',
+                  text1: 'Already have an account? ',
                   text2: 'Sign in',
                   onPress: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => SignInScreen(),
