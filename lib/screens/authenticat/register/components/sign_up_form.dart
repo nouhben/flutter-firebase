@@ -4,6 +4,7 @@ import 'package:please_work/components/default_button.dart';
 import 'package:please_work/components/form_error.dart';
 import 'package:please_work/constants.dart';
 import 'package:please_work/services/authentication_service.dart';
+import 'package:please_work/shared/loading.dart';
 import 'package:please_work/size_config.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -19,59 +20,67 @@ class _SignUpFormState extends State<SignUpForm> {
   String password;
   bool rememberMe = false;
   List<String> errors = [];
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      //autovalidate: true,
-      key: _formKey,
-      child: Column(
-        children: [
-          SizedBox(
-            width: SizeConfig.screenWidth * 0.79,
-            child: _buildFullNameFormField(),
-          ),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          SizedBox(
-            width: SizeConfig.screenWidth * 0.79,
-            child: _buildEmailFormField(),
-          ),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          SizedBox(
-            width: SizeConfig.screenWidth * 0.79,
-            child: _buildPasswordFormField(),
-          ),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          FormError(errors: errors),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-          DefaultButton(
-            text: 'Register',
-            color: kPrimaryColor,
-            press: () async {
-              // The validate() function uses the validators if the validator returns null
-              // which means the field is valid
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                //final AuthService _authService = AuthService();
-                dynamic user = await _authService.registerWithEmailAndPassword(
-                  email: this.email,
-                  password: this.password,
-                );
-                if (user == null) {
-                  setState(() {
-                    errors = [];
-                    errors.add('Could not sign up');
-                  });
-                } else {
-                  print('success state should update: $user');
-                  //Navigator.pushNamed(context, HomeScreen.routeName);
-                }
-              }
-            },
-          ),
-        ],
-      ),
-    );
+    return isLoading
+        ? Loading()
+        : Form(
+            //autovalidate: true,
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: SizeConfig.screenWidth * 0.79,
+                  child: _buildFullNameFormField(),
+                ),
+                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(
+                  width: SizeConfig.screenWidth * 0.79,
+                  child: _buildEmailFormField(),
+                ),
+                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(
+                  width: SizeConfig.screenWidth * 0.79,
+                  child: _buildPasswordFormField(),
+                ),
+                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                FormError(errors: errors),
+                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                DefaultButton(
+                  text: 'Register',
+                  color: kPrimaryColor,
+                  press: () async {
+                    // The validate() function uses the validators if the validator returns null
+                    // which means the field is valid
+                    if (_formKey.currentState.validate()) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      _formKey.currentState.save();
+                      //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                      //final AuthService _authService = AuthService();
+                      dynamic user =
+                          await _authService.registerWithEmailAndPassword(
+                        email: this.email,
+                        password: this.password,
+                      );
+                      if (user == null) {
+                        setState(() {
+                          errors = [];
+                          errors.add('Could not sign up');
+                          isLoading = false;
+                        });
+                      } else {
+                        print('success state should update: $user');
+                        //Navigator.pushNamed(context, HomeScreen.routeName);
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
+          );
   }
 
   TextFormField _buildEmailFormField() {
