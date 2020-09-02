@@ -13,16 +13,26 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  CustomUserSettings _customUserSettingsFromFireStore(
-      DocumentSnapshot _snapshot) {
-    return _snapshot == null
-        ? null
-        : CustomUserSettings(
-            name: _snapshot.get('name'),
-            strength: _snapshot.get('strength'),
-            sugars: _snapshot.get('sugars'),
-          );
-  }
+  // CustomUserSettings _customUserSettingsFromFireStore(
+  //     DocumentSnapshot _snapshot) {
+  //   return _snapshot == null
+  //       ? null
+  //       : CustomUserSettings(
+  //           name: _snapshot.get('name'),
+  //           strength: _snapshot.get('strength'),
+  //           sugars: _snapshot.get('sugars'),
+  //         );
+  // }
+
+  List<CustomUserSettings> _userSettingsListFromSnapshot(
+          QuerySnapshot snapshot) =>
+      snapshot.docs.map(
+        (doc) => CustomUserSettings(
+          name: doc.get('name') ?? '',
+          strength: doc.get('strength') ?? 100,
+          sugars: doc.get('sugars') ?? 0,
+        ),
+      );
 
   Future updateUserSettings({String name, int sugars, int strength}) async {
     return await userSettingsCollection.doc(uid).set({
@@ -34,6 +44,8 @@ class DatabaseService {
 
   // This stream will listen to any changes on collection that the ref is poiting to
   // and notify us
-  Stream<QuerySnapshot> get userSettings =>
-      userSettingsCollection.snapshots(includeMetadataChanges: false);
+  Stream<CustomUserSettings> get userSettings =>
+      userSettingsCollection.snapshots().map(_userSettingsListFromSnapshot);
+  // Stream<QuerySnapshot> get userSettings =>
+  //     userSettingsCollection.snapshots(includeMetadataChanges: false);
 }
