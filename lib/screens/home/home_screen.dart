@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:please_work/models/brew.dart';
+import 'package:please_work/screens/home/components/brew_list.dart';
 import 'package:please_work/services/authentication_service.dart';
 import 'package:please_work/services/database_service.dart';
 import 'package:please_work/shared/constants.dart';
+import 'package:please_work/shared/size_config.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -33,11 +35,11 @@ class HomeScreen extends StatelessWidget {
 
                     context: context,
                     builder: (context) => Container(
-                      //height:
-                      // padding: EdgeInsets.symmetric(horizontal: 10),
-                      // margin: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.all(20),
+                      constraints:
+                          BoxConstraints(maxWidth: SizeConfig.screenWidth * 90),
                       decoration: BoxDecoration(
-                        color: Colors.white38,
+                        color: Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30),
@@ -48,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      child: SettingsForm(),
                     ),
                   );
                 },
@@ -66,40 +69,49 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class BrewList extends StatefulWidget {
+class SettingsForm extends StatefulWidget {
   @override
-  _BrewListState createState() => _BrewListState();
+  _SettingsFormState createState() => _SettingsFormState();
 }
 
-class _BrewListState extends State<BrewList> {
-  @override
-  Widget build(BuildContext context) {
-    final brews = Provider.of<List<Brew>>(context);
-    return ListView.builder(
-      itemCount: brews.length,
-      itemBuilder: (context, index) => BrewTile(
-        brew: brews[index],
-      ),
-    );
-  }
-}
+class _SettingsFormState extends State<SettingsForm> {
+  final List<int> sugars = [0, 1, 2, 3, 4, 5];
+  final GlobalKey _formKey = GlobalKey<FormState>();
 
-class BrewTile extends StatelessWidget {
-  final Brew brew;
-  const BrewTile({this.brew});
+  String _currentName;
+  String _currentSugars;
+  int _currnetStrength;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Card(
-        child: ListTile(
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundColor: Colors.brown[brew.strength],
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Update your Brew Settings'),
+          SizedBox(height: getProportionateScreenHeight(16)),
+          TextFormField(
+            onChanged: (value) => setState(() => _currentName = value),
+            validator: (value) => value.isEmpty ? 'Enter your name' : null,
           ),
-          title: Text(brew.name),
-          subtitle: Text('Takes ${brew.sugars} sugars'),
-        ),
+          SizedBox(height: getProportionateScreenHeight(16)),
+          //Dorpdowan
+          DropdownButtonFormField(
+            items: this
+                .sugars
+                .map((e) => DropdownMenuItem(child: Text(e.toString())))
+                .toList(),
+            onChanged: (value) => setState(() => _currentSugars = value),
+          ),
+          //Slider
+          RaisedButton(
+            color: kPrimaryColor,
+            onPressed: () async {
+              print('$_currentName: $_currentSugars and $_currnetStrength');
+            },
+            child: Text('Update', style: TextStyle(color: Colors.white)),
+          ),
+        ],
       ),
     );
   }

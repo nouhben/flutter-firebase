@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'size_config.dart';
+
 //const Color kPrimaryColor = Color(0xffff7643);
 const Color kPrimaryLightColor = Color(0xffffECDf);
 const Color kSeconaryColor = Color(0xff979797);
@@ -46,3 +48,22 @@ const String kMatchPassError = "Passwords do not match";
 const String kNameNullError = "Please Enter your full name";
 const String kInvalidNameError = "Please Enter Valid name";
 const String kshortNameError = "Name too short";
+
+//INPUTS
+final TextStyle kHeadingStyle = TextStyle(
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
+  fontSize: getProportionateScreenWidth(28),
+);
+final InputDecoration kOtpInputDecoration = InputDecoration(
+  contentPadding: EdgeInsets.symmetric(
+    vertical: getProportionateScreenWidth(15),
+  ),
+  enabledBorder: _outlineInputBorder(),
+  focusedBorder: _outlineInputBorder(),
+  border: _outlineInputBorder(),
+);
+OutlineInputBorder _outlineInputBorder() => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide(color: kTextColor),
+    );
