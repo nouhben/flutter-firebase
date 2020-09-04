@@ -19,9 +19,10 @@ class _SettingsFormState extends State<SettingsForm> {
     return Form(
       key: _formKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text('Update your Brew Settings'),
+          Spacer(),
           SizedBox(height: getProportionateScreenHeight(16)),
           TextFormField(
             onChanged: (value) => setState(() => _currentName = value),
@@ -44,18 +45,43 @@ class _SettingsFormState extends State<SettingsForm> {
                     (sugar) => DropdownMenuItem(
                       child: Text('$sugar sugars'),
                       value: sugar, //this is the selected value
-                      // onTap: () {
-                      //   setState(() {
-                      //     _currentSugars = sugar;
-                      //   });
-                      // },
                     ),
                   )
                   .toList(),
               onChanged: (value) => setState(() => _currentSugars = value),
             ),
           ),
-          //Slider
+          SizedBox(height: getProportionateScreenHeight(16)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.brown[_currnetStrength],
+                ),
+                width: 54.0,
+                height: 54.0,
+              ),
+              Expanded(
+                child: Slider(
+                  min: 100,
+                  max: 900,
+                  activeColor: Colors.brown[_currnetStrength ?? 100],
+                  inactiveColor: Colors.brown[_currnetStrength ?? 100],
+                  label: 'Strength',
+                  value: (_currnetStrength ?? 100).toDouble(),
+                  divisions: 8,
+                  onChanged: (val) {
+                    setState(() {
+                      _currnetStrength = val.round();
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          Spacer(),
           RaisedButton(
             color: kPrimaryColor,
             onPressed: () async {
@@ -63,6 +89,7 @@ class _SettingsFormState extends State<SettingsForm> {
             },
             child: Text('Update', style: TextStyle(color: Colors.white)),
           ),
+          SizedBox(height: 32.0),
         ],
       ),
     );
