@@ -15,11 +15,12 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-show | case
------------- | -------------
-![alt text](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/1.png) | |![alt text](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/2.png)
-![alt text](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/3.png) | |![alt text](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/4.png)
-![alt text](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/5.png) | |![alt text](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/5.png)
+![](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/1.png | width=250) 
+![](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/2.png | width=250)
+![](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/3.png | width=250) 
+![](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/4.png | width=250)
+![](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/5.png | width=250) 
+![](https://github.com/nouhben/flutter-firebase/blob/master/assets/images/5.png | width=250)
 
 
 
