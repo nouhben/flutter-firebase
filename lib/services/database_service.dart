@@ -13,7 +13,7 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  Future updateUserData({String name, int sugars, int strength}) async {
+  Future updateUserData({String name, String sugars, int strength}) async {
     return await brewCollection.doc(uid).set({
       'sugars': sugars,
       'strength': strength,
