@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:please_work/components/costume_suffix_icon.dart';
 import 'package:please_work/components/default_button.dart';
 import 'package:please_work/components/form_error.dart';
-import 'package:please_work/constants.dart';
+import 'package:please_work/shared/constants.dart';
 import 'package:please_work/services/authentication_service.dart';
 import 'package:please_work/shared/loading.dart';
-import 'package:please_work/size_config.dart';
+import 'package:please_work/shared/size_config.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -34,19 +34,19 @@ class _SignUpFormState extends State<SignUpForm> {
                   width: SizeConfig.screenWidth * 0.79,
                   child: _buildFullNameFormField(),
                 ),
-                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(height: getProportionateScreenHeight(30)),
                 SizedBox(
                   width: SizeConfig.screenWidth * 0.79,
                   child: _buildEmailFormField(),
                 ),
-                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(height: getProportionateScreenHeight(30)),
                 SizedBox(
                   width: SizeConfig.screenWidth * 0.79,
                   child: _buildPasswordFormField(),
                 ),
-                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(height: getProportionateScreenHeight(30)),
                 FormError(errors: errors),
-                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(height: getProportionateScreenHeight(30)),
                 DefaultButton(
                   text: 'Register',
                   color: kPrimaryColor,

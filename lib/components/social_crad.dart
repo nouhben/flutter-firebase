@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:please_work/size_config.dart';
+import 'package:please_work/shared/size_config.dart';
 
 class SocialCard extends StatelessWidget {
   const SocialCard({
@@ -19,10 +19,10 @@ class SocialCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(right: 20),
         padding: EdgeInsets.all(
-          SizeConfig.getProportionateScreenWidth(12),
+          getProportionateScreenWidth(12),
         ),
-        height: SizeConfig.getProportionateScreenHeight(40),
-        width: SizeConfig.getProportionateScreenWidth(40),
+        height: getProportionateScreenHeight(40),
+        width: getProportionateScreenWidth(40),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Color(0xfff5f6f9),

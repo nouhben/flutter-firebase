@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:please_work/constants.dart';
+import 'package:please_work/shared/constants.dart';
 
 class NoAccountText extends StatelessWidget {
   final String text1;

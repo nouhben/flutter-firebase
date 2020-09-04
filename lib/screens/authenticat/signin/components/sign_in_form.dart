@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:please_work/components/costume_suffix_icon.dart';
 import 'package:please_work/components/default_button.dart';
 import 'package:please_work/components/form_error.dart';
-import 'package:please_work/constants.dart';
+import 'package:please_work/shared/constants.dart';
 import 'package:please_work/services/authentication_service.dart';
 import 'package:please_work/shared/loading.dart';
-import 'package:please_work/size_config.dart';
+import 'package:please_work/shared/size_config.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -33,12 +33,12 @@ class _SignFormState extends State<SignForm> {
                   width: SizeConfig.screenWidth * 0.79,
                   child: buildEmailFormField(),
                 ),
-                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(height: getProportionateScreenHeight(30)),
                 SizedBox(
                   width: SizeConfig.screenWidth * 0.79,
                   child: buildPasswordFormField(),
                 ),
-                SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                SizedBox(height: getProportionateScreenHeight(30)),
                 Row(
                   children: [
                     Checkbox(
@@ -64,7 +64,7 @@ class _SignFormState extends State<SignForm> {
                   ],
                 ),
                 FormError(errors: errors),
-                SizedBox(height: SizeConfig.getProportionateScreenHeight(20)),
+                SizedBox(height: getProportionateScreenHeight(20)),
                 DefaultButton(
                   text: 'Continue',
                   color: kPrimaryColor,

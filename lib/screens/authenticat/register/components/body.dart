@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:please_work/components/no_account_text.dart';
 import 'package:please_work/screens/authenticat/register/components/sign_up_form.dart';
 import 'package:please_work/screens/authenticat/signin/sign_in_screen.dart';
-import 'package:please_work/size_config.dart';
+import 'package:please_work/shared/size_config.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context);
+    SizeConfig().init(context);
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.getProportionateScreenWidth(20),
+            horizontal: getProportionateScreenWidth(20),
           ),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: SizeConfig.getProportionateScreenWidth(28),
+                    fontSize: getProportionateScreenWidth(28),
                   ),
                 ),
                 Text(

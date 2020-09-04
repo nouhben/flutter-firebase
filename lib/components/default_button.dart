@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:please_work/size_config.dart';
+import 'package:please_work/shared/size_config.dart';
 
 class DefaultButton extends StatelessWidget {
   final String text;
@@ -16,7 +16,7 @@ class DefaultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: SizeConfig.getProportionateScreenHeight(56),
+      height: getProportionateScreenHeight(56),
       child: FlatButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
@@ -26,7 +26,7 @@ class DefaultButton extends StatelessWidget {
           this.text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: SizeConfig.getProportionateScreenWidth(18),
+            fontSize: getProportionateScreenWidth(18),
           ),
         ),
         color: this.color,

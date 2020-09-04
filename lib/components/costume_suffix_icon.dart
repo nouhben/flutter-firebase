@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:please_work/size_config.dart';
+import 'package:please_work/shared/size_config.dart';
 
 class CostumeSuffixIcon extends StatelessWidget {
   final String svgName;
@@ -16,7 +16,7 @@ class CostumeSuffixIcon extends StatelessWidget {
       child: SvgPicture.asset(
         svgName,
         width: 35,
-        height: SizeConfig.getProportionateScreenHeight(18),
+        height: getProportionateScreenHeight(18),
       ),
     );
   }
