@@ -12,10 +12,11 @@ import 'components/settings_form.dart';
 class HomeScreen extends StatelessWidget {
   final AuthService _authService = AuthService();
   static final String routeName = '/home_screen';
+  final DatabaseService _databaseService = DatabaseService();
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Brew>>.value(
-      value: DatabaseService().brews,
+      value: _databaseService.brews,
       child: Scaffold(
         appBar: AppBar(
           title: Text('HOME'),

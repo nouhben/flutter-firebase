@@ -6,6 +6,6 @@ class Brew {
   });
 
   final String name;
-  final int sugars;
+  final String sugars;
   final int strength;
 }

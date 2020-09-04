@@ -27,6 +27,7 @@ class _SettingsFormState extends State<SettingsForm> {
           TextFormField(
             onChanged: (value) => setState(() => _currentName = value),
             validator: (value) => value.isEmpty ? 'Enter your name' : null,
+            initialValue: _currentName ?? 'Jhon Doe',
             decoration: InputDecoration(
               hintText: 'Enter your name',
               labelText: "Name",
@@ -39,6 +40,7 @@ class _SettingsFormState extends State<SettingsForm> {
             child: DropdownButtonFormField(
               isDense: true,
               hint: Text('Sugars'),
+              value: _currentSugars,
               items: this
                   .sugars
                   .map(
@@ -84,9 +86,7 @@ class _SettingsFormState extends State<SettingsForm> {
           Spacer(),
           RaisedButton(
             color: kPrimaryColor,
-            onPressed: () async {
-              print('$_currentName: $_currentSugars and $_currnetStrength');
-            },
+            onPressed: () async {},
             child: Text('Update', style: TextStyle(color: Colors.white)),
           ),
           SizedBox(height: 32.0),

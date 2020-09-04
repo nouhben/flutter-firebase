@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:please_work/models/brew.dart';
+import 'package:please_work/models/user_data.dart';
 
 class DatabaseService {
   //1- we need a collection reference which is ref to a collection in the firestore
@@ -25,7 +26,7 @@ class DatabaseService {
       return Brew(
         name: doc.get('name') ?? '',
         strength: doc.get('strength') ?? 100,
-        sugars: doc.get('sugars') ?? 0,
+        sugars: doc.get('sugars') ?? '0',
       );
     }).toList();
   }
@@ -34,4 +35,17 @@ class DatabaseService {
   Stream<List<Brew>> get brews {
     return brewCollection.snapshots().map(_brewListFromSnapshot);
   }
+
+//UserData from Snapshot of a user data document
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) => snapshot == null
+      ? null
+      : UserData(
+          uid: this.uid, //snapshot.get('uid'),
+          name: snapshot.get('name'), // snapshot.data['name]
+          strength: snapshot.get('strength'),
+          sugars: snapshot.get('sugars'),
+        );
+  //User document at each change
+  Stream<UserData> get userData =>
+      brewCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
 }
