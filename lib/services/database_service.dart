@@ -27,6 +27,8 @@ class DatabaseService {
         name: doc.get('name') ?? '',
         strength: doc.get('strength') ?? 100,
         sugars: doc.get('sugars') ?? '0',
+        image: doc.get('image') ??
+            'https://img.icons8.com/bubbles/50/000000/kawaii-coffee.png',
       );
     }).toList();
   }

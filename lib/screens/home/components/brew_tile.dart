@@ -14,10 +14,7 @@ class BrewTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 25,
-            backgroundImage: NetworkImage(
-              'https://img.icons8.com/bubbles/50/000000/kawaii-coffee.png',
-              //scale: 0.2,
-            ),
+            backgroundImage: NetworkImage(brew.image, scale: 0.5),
           ),
           title: Text(brew.name),
           subtitle: Text('Takes ${brew.sugars} sugars'),
