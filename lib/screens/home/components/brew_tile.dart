@@ -9,10 +9,15 @@ class BrewTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+        elevation: 16.0,
         child: ListTile(
           leading: CircleAvatar(
             radius: 25,
-            backgroundColor: Colors.brown[brew.strength],
+            backgroundImage: NetworkImage(
+              'https://img.icons8.com/bubbles/50/000000/kawaii-coffee.png',
+              //scale: 0.2,
+            ),
           ),
           title: Text(brew.name),
           subtitle: Text('Takes ${brew.sugars} sugars'),

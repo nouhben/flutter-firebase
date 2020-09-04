@@ -52,40 +52,74 @@ class _SettingsFormState extends State<SettingsForm> {
                     labelText: "Name",
                   ),
                 ),
-                SizedBox(height: getProportionateScreenHeight(16)),
+                SizedBox(height: getProportionateScreenHeight(36)),
                 //Dorpdowan
-                SizedBox(
-                  width: getProportionateScreenWidth(200),
-                  child: DropdownButtonFormField(
-                    isDense: true,
-                    hint: Text('Sugars'),
-                    value: _currentSugars ?? userData.sugars,
-                    items: this
-                        .sugars
-                        .map(
-                          (sugar) => DropdownMenuItem(
-                            child: Text('$sugar sugars'),
-                            value: sugar, //this is the selected value
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) =>
-                        setState(() => _currentSugars = value),
-                    onSaved: (value) => _currentSugars = value,
-                  ),
-                ),
-                SizedBox(height: getProportionateScreenHeight(16)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
+                      width: 60.0,
+                      height: 60.0,
+                      padding: EdgeInsets.all(8.0),
+                      margin: EdgeInsets.only(right: 30.0),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://img.icons8.com/ultraviolet/40/000000/sugar-cubes.png'),
+                          fit: BoxFit.scaleDown,
+                        ),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: kPrimaryColor
+                              .withOpacity((userData.strength * 0.75) / 900),
+                          width: 3.0,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: getProportionateScreenWidth(200),
+                        child: DropdownButtonFormField(
+                          isDense: true,
+                          hint: Text('Sugars'),
+                          value: _currentSugars ?? userData.sugars,
+                          items: this
+                              .sugars
+                              .map(
+                                (sugar) => DropdownMenuItem(
+                                  child: Text('$sugar sugars'),
+                                  value: sugar, //this is the selected value
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) =>
+                              setState(() => _currentSugars = value),
+                          onSaved: (value) => _currentSugars = value,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: getProportionateScreenHeight(36)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 60.0,
+                      height: 60.0,
+                      padding: const EdgeInsets.all(8.0),
+                      margin: EdgeInsets.only(right: 30.0),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            'https://img.icons8.com/fluent/48/000000/coffee-beans-.png',
+                          ),
+                          fit: BoxFit.scaleDown,
+                        ),
                         color:
                             Colors.brown[_currnetStrength ?? userData.strength],
                       ),
-                      width: 54.0,
-                      height: 54.0,
                     ),
                     Expanded(
                       child: Slider(
