@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:please_work/models/user.dart';
 import 'package:please_work/models/user_data.dart';
@@ -18,7 +20,7 @@ class _SettingsFormState extends State<SettingsForm> {
 
   String _currentName;
   String _currentSugars;
-  int _currnetStrength;
+  int _currnetStrength = 100;
   @override
   Widget build(BuildContext context) {
     final _loggedInUser = Provider.of<CustomUser>(context);
@@ -41,6 +43,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 SizedBox(height: getProportionateScreenHeight(16)),
                 TextFormField(
                   onChanged: (value) => setState(() => _currentName = value),
+                  onSaved: (value) => _currentName = value,
                   validator: (value) =>
                       value.isEmpty ? 'Enter your name' : null,
                   initialValue: _currentName ?? userData.name,
@@ -68,6 +71,7 @@ class _SettingsFormState extends State<SettingsForm> {
                         .toList(),
                     onChanged: (value) =>
                         setState(() => _currentSugars = value),
+                    onSaved: (value) => _currentSugars = value,
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(16)),
@@ -115,6 +119,8 @@ class _SettingsFormState extends State<SettingsForm> {
                         strength: _currnetStrength,
                         sugars: _currentSugars,
                       );
+                      sleep(Duration(seconds: 1));
+                      Navigator.pop(context);
                     }
                   },
                   child: Text('Update', style: TextStyle(color: Colors.white)),
