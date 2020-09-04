@@ -75,11 +75,11 @@ class SettingsForm extends StatefulWidget {
 }
 
 class _SettingsFormState extends State<SettingsForm> {
-  final List<int> sugars = [0, 1, 2, 3, 4, 5];
+  final List<String> sugars = ['0', '1', '2', '3', '4', '5'];
   final GlobalKey _formKey = GlobalKey<FormState>();
 
   String _currentName;
-  String _currentSugars;
+  String _currentSugars = '0';
   int _currnetStrength;
   @override
   Widget build(BuildContext context) {
@@ -93,15 +93,34 @@ class _SettingsFormState extends State<SettingsForm> {
           TextFormField(
             onChanged: (value) => setState(() => _currentName = value),
             validator: (value) => value.isEmpty ? 'Enter your name' : null,
+            decoration: InputDecoration(
+              hintText: 'Enter your name',
+              labelText: "Name",
+            ),
           ),
           SizedBox(height: getProportionateScreenHeight(16)),
           //Dorpdowan
-          DropdownButtonFormField(
-            items: this
-                .sugars
-                .map((e) => DropdownMenuItem(child: Text(e.toString())))
-                .toList(),
-            onChanged: (value) => setState(() => _currentSugars = value),
+          SizedBox(
+            width: getProportionateScreenWidth(200),
+            child: DropdownButtonFormField(
+              isDense: true,
+              hint: Text('Sugars'),
+              items: this
+                  .sugars
+                  .map(
+                    (sugar) => DropdownMenuItem(
+                      child: Text('$sugar sugars'),
+                      value: sugar, //this is the selected value
+                      // onTap: () {
+                      //   setState(() {
+                      //     _currentSugars = sugar;
+                      //   });
+                      // },
+                    ),
+                  )
+                  .toList(),
+              onChanged: (value) => setState(() => _currentSugars = value),
+            ),
           ),
           //Slider
           RaisedButton(
