@@ -37,6 +37,7 @@ class _SettingsFormState extends State<SettingsForm> {
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text('Update your Brew Settings'),
                 Spacer(),
@@ -159,7 +160,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   },
                   child: Text('Update', style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(height: 32.0),
+                //SizedBox(height: 5.0),
               ],
             ),
           );

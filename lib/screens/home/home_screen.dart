@@ -34,11 +34,13 @@ class HomeScreen extends StatelessWidget {
                     elevation: 16.0,
                     enableDrag: true,
                     isDismissible: true,
+                    useRootNavigator: true,
                     //barrierColor: Colors.transparent,
 
                     context: context,
                     builder: (context) => Container(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.only(
+                          top: 0, left: 20, right: 20, bottom: 20),
                       constraints:
                           BoxConstraints(maxWidth: SizeConfig.screenWidth * 90),
                       decoration: BoxDecoration(
@@ -58,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
                 icon: Icon(Icons.settings),
-                label: Text('Settongs'))
+                label: Text('Settings'))
           ],
         ),
         body: SafeArea(
