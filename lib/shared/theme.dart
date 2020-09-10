@@ -18,7 +18,7 @@ ThemeData themeData(BuildContext context) {
     iconTheme: IconThemeData(color: kBodyTextColorLight),
     accentIconTheme: IconThemeData(color: kAccentIconLightColor),
     primaryIconTheme: IconThemeData(color: kPrimaryIconLightColor),
-    textTheme: TextTheme(
+    textTheme: GoogleFonts.latoTextTheme().copyWith(
       bodyText1: TextStyle(color: kBodyTextColorLight),
       bodyText2: TextStyle(color: kBodyTextColorLight),
       headline4: TextStyle(color: kTitleTextLightColor, fontSize: 32),
@@ -56,18 +56,18 @@ ThemeData darkThemeData(BuildContext context) {
     iconTheme: IconThemeData(color: kBodyTextColorDark),
     accentIconTheme: IconThemeData(color: kAccentIconDarkColor),
     primaryIconTheme: IconThemeData(color: kPrimaryIconDarkColor),
-    // textTheme: GoogleFonts.latoTextTheme().copyWith(
-    //   bodyText1: TextStyle(color: kBodyTextColorDark),
-    //   bodyText2: TextStyle(color: kBodyTextColorDark),
-    //   headline4: TextStyle(color: kTitleTextDarkColor, fontSize: 32),
-    //   headline1: TextStyle(color: kTitleTextDarkColor, fontSize: 80),
-    // ),
-    textTheme: TextTheme(
+    textTheme: GoogleFonts.latoTextTheme().copyWith(
       bodyText1: TextStyle(color: kBodyTextColorDark),
       bodyText2: TextStyle(color: kBodyTextColorDark),
       headline4: TextStyle(color: kTitleTextDarkColor, fontSize: 32),
       headline1: TextStyle(color: kTitleTextDarkColor, fontSize: 80),
     ),
+    // textTheme: TextTheme(
+    //   bodyText1: TextStyle(color: kBodyTextColorDark),
+    //   bodyText2: TextStyle(color: kBodyTextColorDark),
+    //   headline4: TextStyle(color: kTitleTextDarkColor, fontSize: 32),
+    //   headline1: TextStyle(color: kTitleTextDarkColor, fontSize: 80),
+    // ),
   );
 }
 
