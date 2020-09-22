@@ -75,29 +75,31 @@ class AuthService {
   }
 
   Future<CustomUser> signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      if (await googleSignIn.isSignedIn()) {
+        return _userFromFirebaseUser(_auth.currentUser);
+      }
+      final GoogleSignInAccount googleSignInAccount =
+          await googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-    final UserCredential authResult =
-        await _auth.signInWithCredential(credential);
-    final User user = authResult.user;
-    if (user != null) {
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
-
-      final User currentUser = _auth.currentUser;
-      assert(user.uid == currentUser.uid);
-
-      print('signInWithGoogle succeeded: $user');
-      return _userFromFirebaseUser(user);
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        final UserCredential authResult =
+            await _auth.signInWithCredential(credential);
+        if (authResult.user != null) {
+          print('signInWithGoogle succeeded: ${authResult.user}');
+          return _userFromFirebaseUser(authResult.user);
+        }
+      }
+    } catch (e) {
+      return null;
     }
-    return null;
   }
 
 //benkadi.nouh@icloud.com

@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Brew>>.value(
+      catchError: (context, error) => [],
       value: _databaseService.brews,
       child: Scaffold(
         appBar: AppBar(
