@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:please_work/models/user.dart';
 
 import 'database_service.dart';
@@ -28,7 +29,7 @@ class AuthService {
   }
 
   // On auth state change we need to logout the user
-  // then map it to our costum user instead of the default firebaseUser
+  // then map it to our costume user instead of the default firebaseUser
   Stream<CustomUser> get user {
     return _auth
         .authStateChanges()
@@ -71,6 +72,32 @@ class AuthService {
       print(e.toString());
       return null;
     }
+  }
+
+  Future<CustomUser> signInWithGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+    final UserCredential authResult =
+        await _auth.signInWithCredential(credential);
+    final User user = authResult.user;
+    if (user != null) {
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final User currentUser = _auth.currentUser;
+      assert(user.uid == currentUser.uid);
+
+      print('signInWithGoogle succeeded: $user');
+      return _userFromFirebaseUser(user);
+    }
+    return null;
   }
 
 //benkadi.nouh@icloud.com
