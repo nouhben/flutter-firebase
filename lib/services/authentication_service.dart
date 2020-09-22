@@ -6,6 +6,7 @@ import 'database_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   CustomUser _userFromFirebaseUser(User _firebaseUser) {
     return _firebaseUser != null
@@ -76,7 +77,6 @@ class AuthService {
 
   Future<CustomUser> signInWithGoogle() async {
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
       if (await googleSignIn.isSignedIn()) {
         return _userFromFirebaseUser(_auth.currentUser);
       }
@@ -105,6 +105,7 @@ class AuthService {
 //benkadi.nouh@icloud.com
   Future signOut() async {
     try {
+      await googleSignIn.signOut();
       return await _auth.signOut();
     } catch (e) {
       return null;
